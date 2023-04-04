@@ -44,3 +44,8 @@
   font-style: normal;
 }
 
+.content {
+  display: flex;
+  overflow-y: auto;
+  /* background-color: aqua; */
+}

@@ -1,46 +1,30 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider, MantineTheme, ColorSchemeProvider, ColorScheme } from "@mantine/core";
-import { useState } from "react";
+import { Provider } from "react-redux";
 
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import store from "@/Components/socket";
 
 export default function App({ Component, pageProps }: AppProps) {
-    const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
-        key: "mantine-color-scheme",
-        defaultValue: "light",
-        getInitialValueInEffect: true,
-    });
+    // const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({
+    //     key: "mantine-color-scheme",
+    //     defaultValue: "light",
+    //     getInitialValueInEffect: true,
+    // });
 
-    const toggleColorScheme = (value?: ColorScheme) => {
-        setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
-    };
+    // const toggleColorScheme = (value?: ColorScheme) => {
+    //     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+    // };
 
-    useHotkeys([["mod+J", () => toggleColorScheme()]]);
+    // useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
     return (
-        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <Provider store={store}>
+            {/* <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}> */}
             <MantineProvider
                 theme={{
                     colorScheme: "dark",
-                    // primaryColor: colorScheme === "dark" ? "orange" : "orange",
-                    primaryColor: "red",
-                    colors: {
-                        // @ts-ignore
-                        deepPurple: "#120428",
-                        // dark: [
-                        //     "#d5d7e0",
-                        //     "#acaebf",
-                        //     "#8c8fa3",
-                        //     "#666980",
-                        //     "#4d4f66",
-                        //     "#34354a",
-                        //     "#2b2c3d",
-                        //     "#120428", // background
-                        //     "#0c0d21",
-                        //     "#01010a",
-                        // ],
-                    },
                 }}
                 withGlobalStyles
                 withNormalizeCSS
@@ -48,6 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
             >
                 <Component {...pageProps} />
             </MantineProvider>
-        </ColorSchemeProvider>
+            {/* </ColorSchemeProvider> */}
+        </Provider>
     );
 }
