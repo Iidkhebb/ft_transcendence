@@ -4,20 +4,13 @@ import { useFrame } from "@react-three/fiber";
 import Link from "next/link";
 import { useMediaQuery } from "@mantine/hooks";
 import Login from "./login";
-import Register from "./register";
+import Team from "../team";
+import { Dashboard } from "../dashboard";
 
 const useStyles = createStyles((theme) => ({
     container: {
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center",
-        // justifyContent: "center",
         height: "100vh",
         width: "100vw",
-        // background: "url('/images/background.jpg')",
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
-        // backgroundRepeat: "no-repeat",
     },
 
     animation_apperance: {
@@ -97,20 +90,36 @@ const useStyles = createStyles((theme) => ({
 
 export function Welcome({}: {}) {
     const [loginShow, setLoginShow] = useState(false);
-    const [registerShow, setRegisterShow] = useState(false);
+    const [isUser, setUser] = useState<any>({
+        auth: true,
+    });
 
     return (
-        <>
-            {loginShow ? (
-                registerShow ? (
-                    <Register setRegisterShow={setRegisterShow} />
-                ) : (
-                    <Login setLoginShow={setLoginShow} setRegisterShow={setRegisterShow} />
-                )
+        <Box
+            sx={{
+                width: "100vw",
+                height: "100vh",
+                margin: 20,
+                overflowY: "scroll",
+            }}
+        >
+            {isUser.auth ? (
+                <Dashboard />
+            ) : loginShow ? (
+                <Login setLoginShow={setLoginShow} />
             ) : (
-                <HeroSection setLoginShow={setLoginShow} />
+                <Box>
+                    <HeroSection setLoginShow={setLoginShow} />
+                    <Box
+                        sx={{
+                            minHeight: "90vh",
+                        }}
+                    >
+                        <Team />
+                    </Box>
+                </Box>
             )}
-        </>
+        </Box>
     );
 }
 
@@ -123,7 +132,7 @@ export default function HeroSection({ setLoginShow }: { setLoginShow: (value: bo
             direction="column"
             align="center"
             justify="center"
-            mih="90vh"
+            mih="100vh"
         >
             <Box className={classes.title}>
                 <Title className={classes.text}>

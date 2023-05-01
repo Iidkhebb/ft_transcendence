@@ -1,10 +1,6 @@
-import { Container, Paper, Text, Button, Divider, Flex, createStyles } from "@mantine/core";
-import { useForm, isEmail } from "@mantine/form";
+import { Container, Paper, Text, createStyles } from "@mantine/core";
 
 import Back_Button from "./components/Back_Button";
-import Email_Auth_Method from "./components/Email_Auth_Method";
-import Forgot_Password_Link from "./components/Forgot_Password_Link";
-import Register_Link from "./components/Register_Link";
 import { Third_party_login } from "./components/Third_party_login";
 import type { auths } from "./components/Third_party_login";
 
@@ -33,42 +29,16 @@ const useStyles = createStyles((theme) => ({
 
 interface Props {
     setLoginShow: (value: boolean) => void;
-    setRegisterShow: (value: boolean) => void;
 }
 
-export default function Login({ setLoginShow, setRegisterShow }: Props) {
+export default function Login({ setLoginShow }: Props) {
     const { classes } = useStyles();
-
-    const form = useForm({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-
-        validate: {
-            email: isEmail("Email is not valid"),
-            password: (value) => {
-                if (value.length < 8) {
-                    return "Password must be at least 8 characters long";
-                }
-            }
-        },
-    });
-
-    const submit = form.onSubmit((values) => {
-        console.log(values);
-    });
-
-    const googleAuth = () => {
-        console.log("GOOGLE BTN CLICKED!");
-    };
 
     const intraAuth = () => {
         console.log("42 BTN CLICKED!");
     };
 
     const auths: auths = {
-        google: googleAuth,
         intra: intraAuth,
     }
 
@@ -76,21 +46,12 @@ export default function Login({ setLoginShow, setRegisterShow }: Props) {
         <Container className={classes.container}>
             <Container size="400px" className={classes.form}>
                 <Back_Button func={setLoginShow} />
-                <Paper w="100%" p="xl" radius="md" withBorder component="form" onSubmit={submit}>
+                <Paper w="100%" p="xl" radius="md" withBorder>
                     <Text size="lg" weight={500}>
-                        Login with
+                        Start using
                     </Text>
                     <Third_party_login auths={auths} />
-                    <Divider label="Or continue with email" labelPosition="center" mt="lg" />
-                    <Email_Auth_Method form={form} />
-                    <Flex mt="lg" justify="space-between" align="center">
-                        <Register_Link action={setRegisterShow} />
-                        <Button type="submit" color="orange" variant="filled" uppercase radius="lg">
-                            Login
-                        </Button>
-                    </Flex>
                 </Paper>
-                <Forgot_Password_Link />
             </Container>
         </Container>
     );
