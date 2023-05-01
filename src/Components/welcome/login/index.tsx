@@ -3,6 +3,7 @@ import { Container, Paper, Text, createStyles } from "@mantine/core";
 import Back_Button from "./components/Back_Button";
 import { Third_party_login } from "./components/Third_party_login";
 import type { auths } from "./components/Third_party_login";
+import { useRouter } from "next/router";
 
 const useStyles = createStyles((theme) => ({
     container: {
@@ -36,6 +37,7 @@ export default function Login({ setLoginShow }: Props) {
 
     const intraAuth = () => {
         console.log("42 BTN CLICKED!");
+        window.location.href = "/dashboard";
     };
 
     const auths: auths = {

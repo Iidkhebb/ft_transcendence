@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useMediaQuery } from "@mantine/hooks";
 import Login from "./login";
 import Team from "../team";
-import { Dashboard } from "../dashboard";
 
 const useStyles = createStyles((theme) => ({
     container: {
@@ -90,9 +89,6 @@ const useStyles = createStyles((theme) => ({
 
 export function Welcome({}: {}) {
     const [loginShow, setLoginShow] = useState(false);
-    const [isUser, setUser] = useState<any>({
-        auth: true,
-    });
 
     return (
         <Box
@@ -103,9 +99,7 @@ export function Welcome({}: {}) {
                 overflowY: "scroll",
             }}
         >
-            {isUser.auth ? (
-                <Dashboard />
-            ) : loginShow ? (
+            {loginShow ? (
                 <Login setLoginShow={setLoginShow} />
             ) : (
                 <Box>
@@ -159,28 +153,3 @@ export default function HeroSection({ setLoginShow }: { setLoginShow: (value: bo
         </Flex>
     );
 }
-
-// const links = [
-//     { label: "ABOUT", link: "/#about" },
-//     { label: "TEAM", link: "/#Team" },
-// ];
-
-// function Menu() {
-//     return (
-//         <Box>
-//             <Container size='xl' bg='red'>
-//                 <Flex>
-//                     {links.map((link) => (
-//                         <Link href={link.link} style={{
-//                             textDecoration: "none",
-//                         }}>
-//                             <Box mr={10}>
-//                                 <Text color="white" >{link.label}</Text>
-//                             </Box>
-//                         </Link>
-//                     ))}
-//                 </Flex>
-//             </Container>
-//         </Box>
-//     )
-// }
