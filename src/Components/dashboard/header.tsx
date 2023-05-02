@@ -1,6 +1,19 @@
 import React from "react";
-import { Box, Header, MediaQuery, Burger, Text, useMantineTheme } from "@mantine/core";
-
+import {
+    Box,
+    Header,
+    MediaQuery,
+    Burger,
+    Text,
+    useMantineTheme,
+    Image,
+    Space,
+    Group,
+    Flex,
+    Title,
+    Anchor,
+} from "@mantine/core";
+import UserButtonMenu from "./profile/Menu";
 
 export default function HeaderDashboard() {
     const [opened, setOpened] = React.useState(false);
@@ -19,7 +32,19 @@ export default function HeaderDashboard() {
                     />
                 </MediaQuery>
 
-                <Text>Dashboard header</Text>
+                <Flex w="100%" justify="space-between">
+                    <Group>
+                        <Image src="/favicon.svg" width={40} height={40} />
+                        <Title color="gray.0" fz="xl">
+                            70sPong
+                        </Title>
+                    </Group>
+                    <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                        <Box>
+                            <UserButtonMenu />
+                        </Box>
+                    </MediaQuery>
+                </Flex>
             </div>
         </Header>
     );

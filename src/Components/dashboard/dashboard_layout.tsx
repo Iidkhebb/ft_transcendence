@@ -5,6 +5,7 @@ import { useMantineTheme, Flex } from "@mantine/core";
 
 import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger } from "@mantine/core";
 import HeaderDashboard from "./header";
+import Chat from "./chat/chat";
 
 export function DashboardLayout() {
     const theme = useMantineTheme();
@@ -19,8 +20,8 @@ export function DashboardLayout() {
             navbarOffsetBreakpoint="sm"
             asideOffsetBreakpoint="sm"
             navbar={
-                <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
-                    <Text>chat</Text>
+                <Navbar hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 250, md: 300, lg: 400 }}>
+                    <Chat />
                 </Navbar>
             }
             //   aside={
