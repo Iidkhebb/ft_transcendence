@@ -18,6 +18,7 @@ import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { IconArrowBack, IconArrowNarrowLeft, IconBackhoe, IconSend } from "@tabler/icons-react";
 import { IconBackspace } from "@tabler/icons";
+import { PrivateChatMenu } from "./components/privateChatMenu";
 
 export default function Chat() {
     const [value, setValue] = useState("Messages");
@@ -102,12 +103,10 @@ function ListMessages({ setSelected }: { setSelected: any }) {
                         }}
                         initial={{
                             opacity: 0,
-                            scale: 1,
                             background: "transparent",
                             borderRadius: theme.radius.md,
                         }}
                         whileHover={{
-                            scale: 1.1,
                             background: theme.colors.gray[9],
                             borderRadius: theme.radius.md,
                         }}
@@ -127,6 +126,7 @@ function ListMessages({ setSelected }: { setSelected: any }) {
                                 </Box>
                             </Flex>
                         </Flex>
+                        <Divider />
                     </motion.div>
                 ))}
             </Navbar.Section>
@@ -156,7 +156,7 @@ function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
             message: "fin awlad l9ahba? 💁👌🎍😍",
             time: "12:00",
             from: "me",
-        }
+        },
     ]);
 
     const [message, setMessage] = useState("");
@@ -168,12 +168,12 @@ function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
         setMessages([...messages, message]);
         setMessage("");
 
-            // // scroll to bottom
-            // //get the last message
-            // const lastMessage = scrollRef.current.lastElementChild;
+        // // scroll to bottom
+        // //get the last message
+        // const lastMessage = scrollRef.current.lastElementChild;
 
-            // // scroll to the last message
-            // lastMessage.scrollIntoView({ behavior: "smooth" });
+        // // scroll to the last message
+        // lastMessage.scrollIntoView({ behavior: "smooth" });
     };
 
     useEffect(() => {
@@ -184,10 +184,9 @@ function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
         lastMessage.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-
     return (
         <Box>
-            <Group p={10} pt={20}>
+            <Flex p={10} pt={20}>
                 <motion.div
                     animate={{ opacity: 1 }}
                     transition={{
@@ -211,14 +210,16 @@ function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
                 >
                     <IconArrowNarrowLeft size={25} />
                 </motion.div>
-
-                <Group>
-                    <Avatar src={user.avatar} size="sm" radius="xl" />
-                    <Box ml={-6}>
-                        <Text fz="md">{user.name}</Text>
-                    </Box>
-                </Group>
-            </Group>
+                <Flex justify="space-between" w="100%">
+                    <Group w={"100%"}>
+                        <Avatar src={user.avatar} size="sm" radius="xl" />
+                        <Box ml={-6}>
+                            <Text fz="md">{user.name}</Text>
+                        </Box>
+                    </Group>
+                    <PrivateChatMenu />
+                </Flex>
+            </Flex>
             <Divider my="xs" size="xs" color="gray.7" />
             <Box
                 p={10}
@@ -275,7 +276,7 @@ function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
     );
 }
 
-function Message({ message, username }: { message: any, username: string }) {
+function Message({ message, username }: { message: any; username: string }) {
     const theme = useMantineTheme();
     return (
         <Box>

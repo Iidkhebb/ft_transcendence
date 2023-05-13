@@ -6,6 +6,7 @@ import { useMantineTheme, Flex } from "@mantine/core";
 import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger } from "@mantine/core";
 import HeaderDashboard from "./header";
 import Chat from "./chat/chat";
+import PublicGroups from "./public_groups";
 
 export function DashboardLayout() {
     const theme = useMantineTheme();
@@ -38,7 +39,9 @@ export function DashboardLayout() {
             //   }
             header={<HeaderDashboard />}
         >
-            <Text>Resize app to see responsive navbar in action</Text>
+            <Box p="md">
+                <PublicGroups />
+            </Box>
         </AppShell>
     );
 }
