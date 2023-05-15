@@ -1,15 +1,11 @@
 import { Menu } from "@mantine/core";
 import React from "react";
 import {
-    IconArrowsLeftRight,
-    IconMessageCircle,
-    IconPhoto,
-    IconSearch,
     IconSettings,
-    IconTrash,
-} from "@tabler/icons";
+} from "@tabler/icons-react"
 import { Button, Text, Box } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
+import { IconBan } from "@tabler/icons-react";
 
 export function PrivateChatMenu() {
     return (
@@ -27,19 +23,14 @@ export function PrivateChatMenu() {
             </Menu.Target>
 
             <Menu.Dropdown>
-                <Menu.Label>Application</Menu.Label>
+                <Menu.Label>Settings</Menu.Label>
                 {/* <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
                 <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
                 <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item> */}
                 <Menu.Item
-                    // icon={<IconSearch size={14} />}
-                    rightSection={
-                        <Text size="xs" color="dimmed">
-                            ⌘K
-                        </Text>
-                    }
+                    icon={<IconBan size={14} />}
                 >
-                    Search
+                    Ban
                 </Menu.Item>
             </Menu.Dropdown>
         </Menu>
