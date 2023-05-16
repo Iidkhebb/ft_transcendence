@@ -37,7 +37,10 @@ export default function Login({ setLoginShow }: Props) {
 
     const intraAuth = () => {
         console.log("42 BTN CLICKED!");
-        window.location.href = "/dashboard";
+        // implement the 42 login here open small window with 42 login and auth the user
+        // poisition the window in the middle of the screen
+        window.open("http://10.11.7.3:3000/auth/42", "_blank", "width=500,height=700,left=500,top=500");
+        
     };
 
     const auths: auths = {

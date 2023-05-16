@@ -1,4 +1,4 @@
-import { Box, Container, Grid } from "@mantine/core";
+import { Box, Container, Grid, MantineTheme, Space, Title } from "@mantine/core";
 import { useState } from "react";
 import { useMantineTheme, Flex } from "@mantine/core";
 // import Header from "./header";
@@ -39,27 +39,77 @@ export function ProfileLayout() {
         >
             <Container size="xl">
                 <Grid gutter="md">
-                    <Grid.Col xs={12} md={6}>
+                    <Grid.Col xs={12}>
+                        <Box
+                            style={{
+                                height: 300,
+                                background:
+                                    theme.colorScheme === "dark"
+                                        ? theme.colors.dark[7]
+                                        : theme.colors.gray[0],
+                            }}
+                        />
+                        <Flex
+                            sx={(Theme: MantineTheme) => {
+                                return {
+                                    transform: "translateY(-45%)",
+                                };
+                            }}
+                            align={"center"}
+                            justify={"center"}
+                            direction={"column"}
+                        >
+                            <Box
+                                sx={{
+                                    height: 200,
+                                    width: 200,
+                                    borderRadius: "100%",
+
+                                    background: "gray.0",
+                                }}
+                            />
+                            <Space h={10} />
+                            <Title order={2} style={{ marginLeft: 20 }}>
+                                {"Rachid Oudouch"}
+                            </Title>
+
+                        </Flex>
+                    </Grid.Col>
+                    <Grid.Col
+                        xs={12}
+                        md={6}
+                        sx={(Theme: MantineTheme) => {
+                            return {
+                                transform: "translateY(-40%)",
+                            };
+                        }}
+                    >
                         <Box
                             style={{
                                 height: 200,
-                                background: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0],
+                                background:
+                                    theme.colorScheme === "dark"
+                                        ? theme.colors.dark[7]
+                                        : theme.colors.gray[0],
                             }}
                         />
                     </Grid.Col>
-                    <Grid.Col xs={12} md={6}>
+                    <Grid.Col
+                        xs={12}
+                        md={6}
+                        sx={(Theme: MantineTheme) => {
+                            return {
+                                transform: "translateY(-40%)",
+                            };
+                        }}
+                    >
                         <Box
                             style={{
                                 height: 200,
-                                background: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0],
-                            }}
-                        />
-                    </Grid.Col>
-                    <Grid.Col xs={12} md={6}>
-                        <Box
-                            style={{
-                                height: 200,
-                                background: theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.colors.gray[0],
+                                background:
+                                    theme.colorScheme === "dark"
+                                        ? theme.colors.dark[7]
+                                        : theme.colors.gray[0],
                             }}
                         />
                     </Grid.Col>

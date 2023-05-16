@@ -28,6 +28,7 @@ export function PrivateChatMenu() {
                 <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
                 <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item> */}
                 <Menu.Item
+                    color="red"
                     icon={<IconBan size={14} />}
                 >
                     Ban
