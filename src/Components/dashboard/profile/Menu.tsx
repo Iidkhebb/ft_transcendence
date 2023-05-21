@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { IconChevronRight, IconExternalLink, IconLogout, IconPacman } from "@tabler/icons-react";
 import { Group, Avatar, Text, Menu, UnstyledButton, rem } from "@mantine/core";
+import Link from "next/link";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
     image: string;
@@ -46,31 +47,24 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
 );
 
 function UserButtonMenu() {
-
     const user = {
         image: "https://cdn.intra.42.fr/users/15beaf14c3ddf394270275669e105d65/roudouch.jpg",
         name: "Rachid oudouch",
         email: "Rashidoudouch@gmail.com",
-    }
+    };
 
     return (
         <Group position="center">
             <Menu withArrow>
                 <Menu.Target>
-                    <UserButton
-                        image={user.image}
-                        name={user.name}
-                        email={user.email}
-                    />
+                    <UserButton image={user.image} name={user.name} email={user.email} />
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Menu.Item
-                        component="a"
-                        href="/profile"
-                        icon={<IconPacman size={rem(14)} />}
-                    >
-                        My account
-                    </Menu.Item>
+                    <Link href="/profile" style={{
+                        textDecoration: "none"
+                    }}>
+                        <Menu.Item icon={<IconPacman size={rem(14)} />}>My account</Menu.Item>
+                    </Link>
 
                     <Menu.Item
                         component="a"

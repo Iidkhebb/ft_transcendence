@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Box,
     Header,
@@ -14,6 +14,8 @@ import {
     Anchor,
 } from "@mantine/core";
 import UserButtonMenu from "./profile/Menu";
+import Link from "next/link";
+import api from "@/api";
 
 export default function HeaderDashboard() {
     const [opened, setOpened] = React.useState(false);
@@ -35,9 +37,13 @@ export default function HeaderDashboard() {
                 <Flex w="100%" justify="space-between">
                     <Group>
                         <Image src="/favicon.svg" width={40} height={40} />
-                        <Title color="gray.0" fz="xl">
-                            70sPong
-                        </Title>
+                        <Link href="/dashboard" style={{
+                            textDecoration: "none"
+                        }}>
+                            <Title color="gray.0" fz="xl" underline={false}>
+                                70sPong
+                            </Title>
+                        </Link>
                     </Group>
                     <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                         <Box>

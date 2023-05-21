@@ -2,9 +2,8 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { MantineProvider, MantineTheme, ColorSchemeProvider, ColorScheme } from "@mantine/core";
 import { Provider } from "react-redux";
-
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
-import store from "@/Components/socket";
+import store from "@/store/store";
 
 export default function App({ Component, pageProps }: AppProps) {
     // const [colorScheme, setColorScheme] = useLocalStorage<ColorScheme>({

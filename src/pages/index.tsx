@@ -1,27 +1,16 @@
 import Image from "next/image";
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, use } from "react";
 import styles from "@/styles/Home.module.css";
 import { Inter } from "@next/font/google";
 import { Box, Button, createStyles, Title, Text, Flex } from "@mantine/core";
 import { useRive } from "@rive-app/react-canvas";
 import { Head } from "@/Components/head";
 
-// const inter = Inter({ subsets: ["latin"] });
-
-// const nav_bar_links = [
-//     {
-//         link: "/",
-//         label: "Home",
-//     },
-//     {
-//         link: "/about",
-//         label: "About",
-//     },
-//     {
-//         link: "/team",
-//         label: "Team",
-//     },
-// ];
+import { Scene } from "@/Components/scene";
+import { Canvas } from "@react-three/fiber";
+import { Html } from "@react-three/drei";
+import { Welcome } from "@/Components/welcome";
+import api from "@/api";
 
 const useStyles = createStyles((theme) => ({
     container: {
@@ -31,10 +20,6 @@ const useStyles = createStyles((theme) => ({
         justifyContent: "center",
         height: "100vh",
         width: "100vw",
-        // background: "url('/images/background.jpg')",
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
-        // backgroundRepeat: "no-repeat",
     },
 
     container_scene: {
@@ -69,9 +54,6 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-import { Scene } from "@/Components/scene";
-import { Canvas } from "@react-three/fiber";
-
 function LoadingIcon() {
     const { classes, cx } = useStyles();
     const { RiveComponent } = useRive({
@@ -87,11 +69,19 @@ function LoadingIcon() {
         </Box>
     );
 }
-import { Html } from "@react-three/drei";
-import { Welcome } from "@/Components/welcome";
 
 export default function Home() {
     const { classes, cx } = useStyles();
+
+    // useEffect(() => {
+    //     api("/user/profile")
+    //         .then((res) => {
+    //             console.log(res);
+    //         })
+    //         .catch((err) => {
+    //             console.log(err);
+    //         });
+    // }, []);
 
     return (
         <Suspense fallback={<LoadingIcon />}>

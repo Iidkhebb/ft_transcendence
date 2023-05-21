@@ -118,8 +118,8 @@ function ListMessages({ setSelected }: { setSelected: any }) {
                                 <Avatar src={chat.avatar} size="md" radius="xl" />
                                 <Flex justify="space-between" w="100%">
                                     <Box ml={15}>
-                                        <Text fz="md">{chat.name}</Text>
-                                        <Text fz="xs" color="gray.5">
+                                        <Text fz="md" fw='bold' color="gray.0">{chat.name}</Text>
+                                        <Text color="gray.5" fz="sm">
                                             {chat.last_message}
                                         </Text>
                                     </Box>
