@@ -13,6 +13,8 @@ export function ProfileLayout() {
         <AppShell
             styles={{
                 main: {
+                    margin: 0,
+                    padding: 0,
                     background: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
                 },
             }}
@@ -41,6 +43,7 @@ export function ProfileLayout() {
                 <Grid gutter="md">
                     <Grid.Col xs={12}>
                         <Box
+                            
                             style={{
                                 height: 300,
                                 background:
@@ -69,7 +72,7 @@ export function ProfileLayout() {
                                 }}
                             />
                             <Space h={10} />
-                            <Title order={2} style={{ marginLeft: 20 }}>
+                            <Title color="gray.0" order={2} style={{ marginLeft: 20 }}>
                                 {"Rachid Oudouch"}
                             </Title>
 
