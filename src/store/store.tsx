@@ -1,27 +1,16 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-import socket from "@/Components/socket/create_socket";
+import { configureStore } from "@reduxjs/toolkit";
+import { socketSlice } from "./socket";
+import { profileSlice } from "./profile";
 
-const initialState = {
-    socket: socket,
-    profile: null,
+const rootReducer = {
+    socket: socketSlice.reducer,
+    profile: profileSlice.reducer,
 };
 
-const counterSlice = createSlice({
-    name: "socket",
-    initialState: initialState,
-    reducers: {},
-});
-
-const counterSliceProfile = createSlice({
-    name: "socket",
-    initialState: initialState,
-    reducers: {},
-});
-
 const store = configureStore({
-    reducer: counterSlice.reducer,
+    reducer: rootReducer,
 });
 
-export const {} = counterSlice.actions;
-export const {} = counterSliceProfile.actions;
+export const {} = socketSlice.actions;
+export const { setProfile } = profileSlice.actions;
 export default store;

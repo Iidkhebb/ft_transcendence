@@ -6,7 +6,11 @@ import { useMantineTheme, Flex } from "@mantine/core";
 import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger } from "@mantine/core";
 import HeaderDashboard from "../dashboard/header";
 
-export function ProfileLayout() {
+interface props {
+    profile: any;
+}
+
+export function ProfileLayout({ profile }: props) {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
     return (
@@ -43,7 +47,6 @@ export function ProfileLayout() {
                 <Grid gutter="md">
                     <Grid.Col xs={12}>
                         <Box
-                            
                             style={{
                                 height: 300,
                                 background:
@@ -63,19 +66,28 @@ export function ProfileLayout() {
                             direction={"column"}
                         >
                             <Box
-                                sx={{
+                                sx={(theme: MantineTheme) => ({
                                     height: 200,
                                     width: 200,
                                     borderRadius: "100%",
-
-                                    background: "gray.0",
-                                }}
+                                    background: `url(${profile?.avatarUrl}) no-repeat center center / cover`,
+                                    [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+                                        height: 140,
+                                        width: 140,
+                                    },
+                                    [theme.fn.smallerThan(theme.breakpoints.xs)]: {
+                                        height: 120,
+                                        width: 120,
+                                    },
+                                })}
                             />
                             <Space h={10} />
                             <Title color="gray.0" order={2} style={{ marginLeft: 20 }}>
-                                {"Rachid Oudouch"}
+                                {profile?.name}
                             </Title>
-
+                            <Text color="gray.4" fz='sm' style={{ marginLeft: 20 }}>
+                                @{profile?.username}
+                            </Text>
                         </Flex>
                     </Grid.Col>
                     <Grid.Col
