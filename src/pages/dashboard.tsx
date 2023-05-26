@@ -10,7 +10,7 @@ export default function Dashboard() {
         store.subscribe(() => {
             console.log(store.getState());
         });
-        api.get("/user")
+        api.get("/user/profile")
             .then((res: any) => {
                 if (res.status == 200) store.dispatch(setProfile(res.data));
             })

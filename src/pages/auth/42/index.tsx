@@ -7,10 +7,6 @@ export default function callback() {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        // get jwt from cookie in path
-        const jwt = Cookies.get("jwt");
-        // store in local storage
-        localStorage.setItem("jwt", jwt as string);
         api.get("/user/profile")
             .then((res) => {
                 if (res.status === 200) {
