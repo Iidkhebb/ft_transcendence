@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import UserButtonMenu from "./profile/Menu";
 import Link from "next/link";
-import api from "@/api";
+import store from "@/store/store";
 
 export default function HeaderDashboard() {
     const [opened, setOpened] = React.useState(false);

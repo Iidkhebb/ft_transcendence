@@ -1,34 +1,15 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    Divider,
-    Flex,
-    Group,
-    Input,
-    MantineTheme,
-    Navbar,
-    SegmentedControl,
-    Space,
-    Tabs,
-    Text,
-    useMantineTheme,
-    Menu,
-} from "@mantine/core";
+import { Box, Navbar, SegmentedControl } from "@mantine/core";
 import React, { ReactElement, useEffect } from "react";
-import { useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { IconArrowNarrowLeft, IconBackhoe, IconPlus, IconSend } from "@tabler/icons-react";
-import { PrivateChatMenu } from "./components/privateChatMenu";
+import { useState } from "react";
+import { ListChats } from "./components/ListChats";
 
-export default function Chat() {
+export default function Chats({ setChat }: { setChat: (chat: ReactElement) => void }) {
     const [value, setValue] = useState("Messages");
 
     useEffect(() => {
         console.log(value);
     }, [value]);
-    const list = { hidden: { opacity: 0 } };
-    const item = { hidden: { x: -10, opacity: 0 } };
+
     return (
         <Box w={"100%"} h="100%" p="md">
             <Navbar.Section>
@@ -42,342 +23,186 @@ export default function Chat() {
                     ]}
                 ></SegmentedControl>
 
-                {value === "Messages" ? <AreaOfMessages /> : <AreaOfGroups />}
+                {value === "Messages" ? <ListChats /> : <ListGroups />}
             </Navbar.Section>
         </Box>
     );
 }
 
-const chats = [
-    {
-        id: 0,
-        name: "Rashid",
-        last_message: "wor are you doing",
-        time: "12:00",
-        avatar: "https://avatars.githubusercontent.com/u/56592200?v=4",
-    },
-    {
-        id: 1,
-        name: "John Doe",
-        last_message: "Wanna play?",
-        time: "12:00",
-        avatar: "https://avatars.githubusercontent.com/u/56592200?v=4",
-    },
-    {
-        id: 2,
-        name: "John Doe",
-        last_message: "Hello",
-        time: "12:00",
-        avatar: "https://avatars.githubusercontent.com/u/56592200?v=4",
-    },
-];
+// function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
+//     const theme = useMantineTheme();
+//     const [user, setUser] = useState(chats[id]);
 
-function AreaOfMessages() {
-    const theme = useMantineTheme();
-    const [selected, setSelected] = useState(null);
+//     const [messages, setMessages] = useState([
+//         {
+//             id: 0,
+//             message: "Hello",
+//             time: "12:00",
+//             from: "me",
+//         },
+//         {
+//             id: 1,
+//             message: "Hello",
+//             time: "12:00",
+//             from: "other",
+//         },
+//         {
+//             id: 2,
+//             message: "fin awlad l9ahba? 💁👌🎍😍",
+//             time: "12:00",
+//             from: "me",
+//         },
+//     ]);
 
-    return (
-        <>
-            {selected === null ? (
-                <ListMessages setSelected={setSelected} />
-            ) : (
-                <ChatContainer id={selected} setSelected={setSelected} />
-            )}
-        </>
-    );
-}
+//     const [message, setMessage] = useState("");
+//     const [last_message, setLastMessage] = useState<any>(null);
+//     const scrollRef = useRef<any>();
 
-function ListMessages({ setSelected }: { setSelected: any }) {
-    const theme = useMantineTheme();
+//     const sendMessage = (message: any) => {
+//         if (!message || message.message === "") return;
+//         setMessages([...messages, message]);
+//         setMessage("");
 
-    return (
-        <>
-            <Box w={"100%"} h="100%" p="md">
-                <Navbar.Section>
-                    {chats.map((chat, index) => (
-                        <motion.div
-                            key={index}
-                            drag
-                            dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{
-                                duration: 0.1,
-                            }}
-                            initial={{
-                                opacity: 0,
-                                background: "transparent",
-                                borderRadius: theme.radius.md,
-                            }}
-                            whileHover={{
-                                background: theme.colors.gray[9],
-                                borderRadius: theme.radius.md,
-                            }}
-                            onClick={() => setSelected(chat.id)}
-                        >
-                            <Flex p="sm">
-                                <Avatar src={chat.avatar} size="md" radius="xl" />
-                                <Flex justify="space-between" w="100%">
-                                    <Box ml={15}>
-                                        <Text fz="md" fw='bold' color="gray.0">{chat.name}</Text>
-                                        <Text color="gray.5" fz="sm">
-                                            {chat.last_message}
-                                        </Text>
-                                    </Box>
-                                    <Box color="gray" fz="xs">
-                                        {chat.time}
-                                    </Box>
-                                </Flex>
-                            </Flex>
-                            <Divider />
-                        </motion.div>
-                    ))}
-                </Navbar.Section>
-            </Box>
-            {/* floating add button in the buttom */}
-            <Box
-                sx={(theme: MantineTheme) => ({
-                    position: "absolute",
-                    bottom: theme.spacing.md,
-                    right: theme.spacing.md,
-                })}
-            >
-                <ButtonMenu />
-            </Box>
-        </>
-    );
-}
+//         // // scroll to bottom
+//         // //get the last message
+//         // const lastMessage = scrollRef.current.lastElementChild;
 
-import {
-    IconSettings,
-    IconSearch,
-    IconPhoto,
-    IconMessageCircle,
-    IconTrash,
-    IconArrowsLeftRight,
-} from "@tabler/icons-react";
+//         // // scroll to the last message
+//         // lastMessage.scrollIntoView({ behavior: "smooth" });
+//     };
 
-function ButtonMenu() {
-    return (
-        <Menu shadow="md" width={200}>
-            <Menu.Target>
-                <Box
-                    sx={(theme: MantineTheme) => ({
-                        borderRadius: "100%",
-                        background: theme.colors.orange[8],
-                        width: 50,
-                        height: 50,
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        cursor: "pointer",
-                    })}
-                >
-                    <IconPlus size={25} color="white" />
-                </Box>
-            </Menu.Target>
+//     useEffect(() => {
+//         //get the last message
+//         const lastMessage = scrollRef.current.lastElementChild;
 
-            <Menu.Dropdown>
-                <Menu.Label>Application</Menu.Label>
-                <Menu.Item icon={<IconSettings size={14} />}>Settings</Menu.Item>
-                <Menu.Item icon={<IconMessageCircle size={14} />}>Messages</Menu.Item>
-                <Menu.Item icon={<IconPhoto size={14} />}>Gallery</Menu.Item>
-                <Menu.Item
-                    icon={<IconSearch size={14} />}
-                    rightSection={
-                        <Text size="xs" color="dimmed">
-                            ⌘K
-                        </Text>
-                    }
-                >
-                    Search
-                </Menu.Item>
+//         // scroll to the last message
+//         lastMessage.scrollIntoView({ behavior: "smooth" });
+//     }, [messages]);
 
-                <Menu.Divider />
+//     return (
+//         <Box>
+//             <Flex p={10} pt={20}>
+//                 <motion.div
+//                     animate={{ opacity: 1 }}
+//                     transition={{
+//                         duration: 0.1,
+//                     }}
+//                     initial={{
+//                         opacity: 0,
+//                         scale: 1,
+//                         background: "transparent",
+//                         borderRadius: theme.radius.md,
+//                         display: "flex",
+//                         alignItems: "center",
+//                         justifyContent: "center",
+//                     }}
+//                     whileHover={{
+//                         scale: 1.2,
+//                         background: theme.colors.gray[9],
+//                         borderRadius: theme.radius.md,
+//                     }}
+//                     onClick={() => setSelected(null)}
+//                 >
+//                     <IconArrowNarrowLeft size={25} />
+//                 </motion.div>
+//                 <Flex justify="space-between" w="100%">
+//                     <Group w={"100%"}>
+//                         <Avatar src={user.avatar} size="sm" radius="xl" />
+//                         <Box ml={-6}>
+//                             <Text fz="md">{user.name}</Text>
+//                         </Box>
+//                     </Group>
+//                     <PrivateChatMenu />
+//                 </Flex>
+//             </Flex>
+//             <Divider my="xs" size="xs" color="gray.7" />
+//             <Box
+//                 p={10}
+//                 pt={0}
+//                 sx={{
+//                     overflowY: "scroll",
+//                     height: "calc(100vh - 300px)",
+//                 }}
+//                 ref={scrollRef}
+//             >
+//                 {messages.map((message, index) => (
+//                     <Box key={index} mb={10}>
+//                         <Message message={message} username={user.name} />
+//                     </Box>
+//                 ))}
+//             </Box>
+//             <Divider my="xs" size="xs" color="gray.7" />
+//             <Box p={10}>
+//                 <Flex justify="space-between" gap={10} align="center">
+//                     <Input
+//                         placeholder="Type a message..."
+//                         value={message}
+//                         onChange={(e) => setMessage(e.currentTarget.value)}
+//                         onKeyDown={(e) => {
+//                             if (e.key === "Enter") {
+//                                 sendMessage({
+//                                     id: 1,
+//                                     message: message,
+//                                     time: "12:00",
+//                                     from: "me",
+//                                 });
+//                             }
+//                         }}
+//                         w="100%"
+//                     />
+//                     <Button
+//                         variant="outline"
+//                         color="gray"
+//                         size="xs"
+//                         onClick={() => {
+//                             sendMessage({
+//                                 id: 1,
+//                                 message: message,
+//                                 time: "12:00",
+//                                 from: "me",
+//                             });
+//                         }}
+//                     >
+//                         <IconSend size={20} />
+//                     </Button>
+//                 </Flex>
+//             </Box>
+//         </Box>
+//     );
+// }
 
-                <Menu.Label>Danger zone</Menu.Label>
-                <Menu.Item icon={<IconArrowsLeftRight size={14} />}>Transfer my data</Menu.Item>
-                <Menu.Item color="red" icon={<IconTrash size={14} />}>
-                    Delete my account
-                </Menu.Item>
-            </Menu.Dropdown>
-        </Menu>
-    );
-}
+// function Message({ message, username }: { message: any; username: string }) {
+//     const theme = useMantineTheme();
+//     return (
+//         <Box>
+//             <Flex justify={message.from === "me" ? "flex-end" : "flex-start"}>
+//                 <Box
+//                     p={10}
+//                     bg={message.from === "me" ? "gray.9" : "gray.8"}
+//                     sx={{
+//                         borderRadius: theme.radius.md,
+//                         maxWidth: "60%",
+//                         wordWrap: "break-word",
+//                     }}
+//                 >
+//                     {/* name and message */}
+//                     <Flex justify="space-between">
+//                         <Text fz="xs" color="gray.5">
+//                             {message.from === "me" ? "Me" : username}
+//                         </Text>
+//                         <Space w={20} />
+//                         <Text fz="xs" color="gray.5">
+//                             {message.time}
+//                         </Text>
+//                     </Flex>
+//                     <Text fz="sm">{message.message}</Text>
+//                 </Box>
+//             </Flex>
+//         </Box>
+//     );
+// }
 
-function ChatContainer({ id, setSelected }: { id: number; setSelected: any }) {
-    const theme = useMantineTheme();
-    const [user, setUser] = useState(chats[id]);
-
-    const [messages, setMessages] = useState([
-        {
-            id: 0,
-            message: "Hello",
-            time: "12:00",
-            from: "me",
-        },
-        {
-            id: 1,
-            message: "Hello",
-            time: "12:00",
-            from: "other",
-        },
-        {
-            id: 2,
-            message: "fin awlad l9ahba? 💁👌🎍😍",
-            time: "12:00",
-            from: "me",
-        },
-    ]);
-
-    const [message, setMessage] = useState("");
-    const [last_message, setLastMessage] = useState<any>(null);
-    const scrollRef = useRef<any>();
-
-    const sendMessage = (message: any) => {
-        if (!message || message.message === "") return;
-        setMessages([...messages, message]);
-        setMessage("");
-
-        // // scroll to bottom
-        // //get the last message
-        // const lastMessage = scrollRef.current.lastElementChild;
-
-        // // scroll to the last message
-        // lastMessage.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        //get the last message
-        const lastMessage = scrollRef.current.lastElementChild;
-
-        // scroll to the last message
-        lastMessage.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
-
-    return (
-        <Box>
-            <Flex p={10} pt={20}>
-                <motion.div
-                    animate={{ opacity: 1 }}
-                    transition={{
-                        duration: 0.1,
-                    }}
-                    initial={{
-                        opacity: 0,
-                        scale: 1,
-                        background: "transparent",
-                        borderRadius: theme.radius.md,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                    }}
-                    whileHover={{
-                        scale: 1.2,
-                        background: theme.colors.gray[9],
-                        borderRadius: theme.radius.md,
-                    }}
-                    onClick={() => setSelected(null)}
-                >
-                    <IconArrowNarrowLeft size={25} />
-                </motion.div>
-                <Flex justify="space-between" w="100%">
-                    <Group w={"100%"}>
-                        <Avatar src={user.avatar} size="sm" radius="xl" />
-                        <Box ml={-6}>
-                            <Text fz="md">{user.name}</Text>
-                        </Box>
-                    </Group>
-                    <PrivateChatMenu />
-                </Flex>
-            </Flex>
-            <Divider my="xs" size="xs" color="gray.7" />
-            <Box
-                p={10}
-                pt={0}
-                sx={{
-                    overflowY: "scroll",
-                    height: "calc(100vh - 300px)",
-                }}
-                ref={scrollRef}
-            >
-                {messages.map((message, index) => (
-                    <Box key={index} mb={10}>
-                        <Message message={message} username={user.name} />
-                    </Box>
-                ))}
-            </Box>
-            <Divider my="xs" size="xs" color="gray.7" />
-            <Box p={10}>
-                <Flex justify="space-between" gap={10} align="center">
-                    <Input
-                        placeholder="Type a message..."
-                        value={message}
-                        onChange={(e) => setMessage(e.currentTarget.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                                sendMessage({
-                                    id: 1,
-                                    message: message,
-                                    time: "12:00",
-                                    from: "me",
-                                });
-                            }
-                        }}
-                        w="100%"
-                    />
-                    <Button
-                        variant="outline"
-                        color="gray"
-                        size="xs"
-                        onClick={() => {
-                            sendMessage({
-                                id: 1,
-                                message: message,
-                                time: "12:00",
-                                from: "me",
-                            });
-                        }}
-                    >
-                        <IconSend size={20} />
-                    </Button>
-                </Flex>
-            </Box>
-        </Box>
-    );
-}
-
-function Message({ message, username }: { message: any; username: string }) {
-    const theme = useMantineTheme();
-    return (
-        <Box>
-            <Flex justify={message.from === "me" ? "flex-end" : "flex-start"}>
-                <Box
-                    p={10}
-                    bg={message.from === "me" ? "gray.9" : "gray.8"}
-                    sx={{
-                        borderRadius: theme.radius.md,
-                        maxWidth: "60%",
-                        wordWrap: "break-word",
-                    }}
-                >
-                    {/* name and message */}
-                    <Flex justify="space-between">
-                        <Text fz="xs" color="gray.5">
-                            {message.from === "me" ? "Me" : username}
-                        </Text>
-                        <Space w={20} />
-                        <Text fz="xs" color="gray.5">
-                            {message.time}
-                        </Text>
-                    </Flex>
-                    <Text fz="sm">{message.message}</Text>
-                </Box>
-            </Flex>
-        </Box>
-    );
-}
-
-function AreaOfGroups() {
+function ListGroups() {
     return (
         <Box w={"100%"} h="100%" p="md">
             <Navbar.Section>Groups</Navbar.Section>

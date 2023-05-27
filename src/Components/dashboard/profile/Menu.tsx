@@ -1,7 +1,8 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { IconChevronRight, IconExternalLink, IconLogout, IconPacman } from "@tabler/icons-react";
 import { Group, Avatar, Text, Menu, UnstyledButton, rem } from "@mantine/core";
 import Link from "next/link";
+import store from "@/store/store";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
     image: string;
@@ -46,23 +47,28 @@ const UserButton = forwardRef<HTMLButtonElement, UserButtonProps>(
     )
 );
 
-function UserButtonMenu() {
-    const user = {
-        image: "https://cdn.intra.42.fr/users/15beaf14c3ddf394270275669e105d65/roudouch.jpg",
-        name: "Rachid oudouch",
-        email: "Rashidoudouch@gmail.com",
-    };
+function UserButtonMenu({}: {}) {
+    const [profile, setProfile] = useState<any>(null);
+
+    useEffect(() => {
+        store.subscribe(() => {
+            setProfile(store.getState().profile.user);
+        });
+    }, []);
 
     return (
         <Group position="center">
             <Menu withArrow>
                 <Menu.Target>
-                    <UserButton image={user.image} name={user.name} email={user.email} />
+                    <UserButton image={profile?.avatarUrl} name={profile?.name} email={profile?.email} />
                 </Menu.Target>
                 <Menu.Dropdown>
-                    <Link href="/profile" style={{
-                        textDecoration: "none"
-                    }}>
+                    <Link
+                        href="/profile"
+                        style={{
+                            textDecoration: "none",
+                        }}
+                    >
                         <Menu.Item icon={<IconPacman size={rem(14)} />}>My account</Menu.Item>
                     </Link>
 
