@@ -1,11 +1,11 @@
-import { Box, Container, Grid, MantineTheme, Space, Title } from "@mantine/core";
-import { useState } from "react";
+import { Box, Container, Grid, Image, MantineTheme, Space, Title } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { useMantineTheme, Flex } from "@mantine/core";
 // import Header from "./header";
 
-import { AppShell, Navbar, Header, Footer, Aside, Text, MediaQuery, Burger } from "@mantine/core";
+import { AppShell, Text } from "@mantine/core";
 import HeaderDashboard from "../dashboard/header";
-
+import { extractColors } from "extract-colors";
 interface props {
     profile: any;
 }
@@ -13,6 +13,11 @@ interface props {
 export function ProfileLayout({ profile }: props) {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
+
+    useEffect(() => {
+        // extractColors(profile?.avatarUrl).then(console.log).catch(console.error);
+    }, []);
+
     return (
         <AppShell
             styles={{
@@ -67,25 +72,95 @@ export function ProfileLayout({ profile }: props) {
                         >
                             <Box
                                 sx={(theme: MantineTheme) => ({
-                                    height: 200,
-                                    width: 200,
+                                    height: "auto",
                                     borderRadius: "100%",
-                                    background: `url(${profile?.avatarUrl}) no-repeat center center / cover`,
-                                    [theme.fn.smallerThan(theme.breakpoints.sm)]: {
-                                        height: 140,
-                                        width: 140,
-                                    },
-                                    [theme.fn.smallerThan(theme.breakpoints.xs)]: {
-                                        height: 120,
-                                        width: 120,
-                                    },
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    flexDirection: "column",
                                 })}
-                            />
+                            >
+                                <Image
+                                    src="/levels/level1.png"
+                                    sx={(theme: MantineTheme) => ({
+                                        width: "150px !important",
+                                        transform: "translateY(10px)",
+                                        [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+                                            width: "100px !important",
+                                        },
+                                        [theme.fn.smallerThan(theme.breakpoints.xs)]: {
+                                            width: "100px !important",
+                                        },
+                                    })}
+                                />
+                                <Box
+                                    sx={(theme: MantineTheme) => ({
+                                        borderRadius: "100%",
+                                        border: `4px solid ${theme.colors.gray[0]}`,
+                                        height: 200,
+                                        width: 200,
+                                        padding: "4px",
+                                        [theme.fn.smallerThan(theme.breakpoints.sm)]: {
+                                            height: 140,
+                                            width: 140,
+                                        },
+                                        [theme.fn.smallerThan(theme.breakpoints.xs)]: {
+                                            height: 120,
+                                            width: 120,
+                                        },
+                                    })}
+                                >
+                                    <Box
+                                        sx={(theme: MantineTheme) => ({
+                                            width: "100%",
+                                            height: "100%",
+                                            borderRadius: "100%",
+                                            // border: `6px solid ${theme.colors.gray[0]}`,
+                                            // padding: '10px',
+                                            background: `url(${profile?.avatarUrl}) no-repeat center center / cover`,
+                                        })}
+                                    />
+                                </Box>
+                                {/* <Image src='/artch/wings.svg' sx={(theme: MantineTheme) => ({
+                                    width: '300px !important',
+                                    position: 'relative',
+                                    top: '-230px',
+                                    left: '-50px',
+                                })}  /> */}
+                            </Box>
+
+                            {/* Avatar */}
+                            {/* <Box
+                                sx={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    width: '300px !important',
+                                }}
+                            >
+                                <Image
+                                    src={profile?.avatarUrl}
+                                    alt="demo-clip-path"
+                                    width="130"
+                                    height="130"
+                                    sx={{
+                                        WebkitClipPath: 'url("#hex")',
+                                        clipPath: 'url("#hex")',
+                                        transform: 'scale(1.3)',
+                                    }}
+                                />
+                                <svg height="0" width="0">
+                                    <clipPath id="hex">
+                                        <path d="M59 2.8867513459481a10 10 0 0 1 10 0l45.425625842204 26.226497308104a10 10 0 0 1 5 8.6602540378444l0 52.452994616207a10 10 0 0 1 -5 8.6602540378444l-45.425625842204 26.226497308104a10 10 0 0 1 -10 0l-45.425625842204 -26.226497308104a10 10 0 0 1 -5 -8.6602540378444l0 -52.452994616207a10 10 0 0 1 5 -8.6602540378444"></path>
+                                    </clipPath>
+                                </svg>
+                            </Box> */}
+
                             <Space h={10} />
                             <Title color="gray.0" order={2} style={{ marginLeft: 20 }}>
                                 {profile?.name}
                             </Title>
-                            <Text color="gray.4" fz='sm' style={{ marginLeft: 20 }}>
+                            <Text color="gray.4" fz="sm" style={{ marginLeft: 20 }}>
                                 @{profile?.username}
                             </Text>
                         </Flex>
