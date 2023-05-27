@@ -1,7 +1,7 @@
 import { Avatar, Box, Flex, useMantineTheme, Text, Divider } from "@mantine/core";
 import React from "react";
 import { motion } from "framer-motion";
-import store from "@/store/store";
+import store, { setCurrentChat } from "@/store/store";
 
 export function Chat({ chat }: { chat: any }) {
     const theme = useMantineTheme();
@@ -23,10 +23,7 @@ export function Chat({ chat }: { chat: any }) {
                 borderRadius: theme.radius.md,
             }}
             onClick={() => {
-                store.dispatch({
-                    type: "SET_SELECTED_CHAT",
-                    payload: chat,
-                });
+                store.dispatch(setCurrentChat(chat));
             }}
         >
             <Flex p="sm" align="center">

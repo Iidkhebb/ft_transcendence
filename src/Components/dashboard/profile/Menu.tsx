@@ -51,6 +51,7 @@ function UserButtonMenu({}: {}) {
     const [profile, setProfile] = useState<any>(null);
 
     useEffect(() => {
+        setProfile(store.getState().profile.user);
         store.subscribe(() => {
             setProfile(store.getState().profile.user);
         });
