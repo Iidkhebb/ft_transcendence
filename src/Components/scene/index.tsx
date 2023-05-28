@@ -152,7 +152,7 @@ export function Scene() {
                     <PingPongBall oppRacket={oppRacket} Ball={Ball} Racket={Racket} />
                 </Debug>
                 {/* <Ground /> */}
-                <Sky distance={900} sunPosition={[0, -5, 0]} />
+                <Sky distance={900} sunPosition={[0, 0, 0]} rayleigh={10} />
                 <Stars
                     radius={1} /* Radius of the inner sphere (default=100) */
                     count={1000} /*  The number of stars in the star field. */
