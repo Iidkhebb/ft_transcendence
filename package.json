@@ -36,7 +36,6 @@
     "axios": "^1.4.0",
     "eslint": "^8.37.0",
     "eslint-config-next": "^13.2.4",
-    "extract-colors": "^3.0.0",
     "framer-motion": "^10.12.7",
     "js-cookie": "^3.0.5",
     "lamina": "^1.1.23",
