@@ -17,6 +17,7 @@ export function UserInfo({ profile }: { profile: any }) {
                         src={profile?.avatarUrl}
                         alt={profile?.name}
                         radius="100%"
+                        bg={'gray'}
                         sx={(theme: MantineTheme) => ({
                             width: "130px !important",
                             height: "130px !important",

@@ -11,11 +11,14 @@ import store from "@/store/store";
 import { motion } from "framer-motion";
 import { IconArrowNarrowLeft, IconSend } from "@tabler/icons-react";
 import { PrivateChatMenu } from "./chat/components/privateChatMenu";
+import AsideChatInfo from "./aside";
 
 export function DashboardLayout() {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
     const [chat, setChat] = useState<any>(null);
+
+    const AsideWidth = "300px";
 
     useEffect(() => {
         setChat(store.getState().chats.currentChat);
@@ -40,21 +43,28 @@ export function DashboardLayout() {
                 </Navbar>
             }
             header={<HeaderDashboard />}
+            aside={
+                chat ? (
+                    <Aside w={AsideWidth} hiddenBreakpoint="sm" hidden={!opened}>
+                        <AsideChatInfo />
+                    </Aside>
+                ) : undefined
+            }
         >
-            {chat ? (
-                <Box p="md">
-                    <ChatContainer user={chat} setSelected={setChat} />
-                </Box>
-            ) : (
-                <Box p="md">
-                    <PublicGroups />
-                </Box>
-            )}
+            <Box w={chat ? `calc(100% - ${AsideWidth})`: '100%'}>
+                {chat ? (
+                    <Box p="md">
+                        <ChatContainer user={chat} setSelected={setChat} />
+                    </Box>
+                ) : (
+                    <Box p="md">
+                        <PublicGroups />
+                    </Box>
+                )}
+            </Box>
         </AppShell>
     );
 }
-
-
 
 function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
     const theme = useMantineTheme();
