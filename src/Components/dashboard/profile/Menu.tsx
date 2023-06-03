@@ -59,7 +59,10 @@ function UserButtonMenu({}: {}) {
                 <Menu.Target>
                     <UserButton image={profile?.avatarUrl} name={profile?.name} email={profile?.email} />
                 </Menu.Target>
-                <Menu.Dropdown>
+                <Menu.Dropdown  sx={{
+            
+            zIndex: 9999
+        }}>
                     <Link
                         href="/profile"
                         style={{

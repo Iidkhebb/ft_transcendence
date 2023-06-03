@@ -2,21 +2,23 @@ import React from "react";
 import { Box, Avatar, Center, Space, Flex, Button, ActionIcon, Text } from "@mantine/core";
 import { IconBan, IconUser } from "@tabler/icons-react";
 
-function AsideChatInfo() {
+function AsideChatInfo({user}: any) {
+    console.log("user", user);
     return (
         <Box p="md" mt={50}>
             <Center>
                 <Avatar
                     size={"100px"}
                     radius={"100%"}
-                    src="https://avatars.githubusercontent.com/u/45272913?v=4"
+                    src={user.avatar}
                 />
             </Center>
             <Space h={20} />
             <Center>
                 <Flex direction="column" align="center">
-                    <Box>Username</Box>
-                    <Box>Online</Box>
+                    <Text fw="bold" fz="lg">
+                        {user.name}
+                    </Text>
                 </Flex>
             </Center>
             {/* menu Ban-profile */}
@@ -26,18 +28,18 @@ function AsideChatInfo() {
                     {/* button with icon */}
 
                     <Flex direction={'column'} justify='center' align='center'>
+                        <ActionIcon variant="filled" radius="xl" size="lg">
+                            <IconUser size={20} />
+                        </ActionIcon>
+                        <Space h={8} />
+                        <Text fz="sm">Profile</Text>
+                    </Flex>
+                    <Flex direction={'column'} justify='center' align='center'>
                         <ActionIcon color="red" variant="filled" radius="xl" size="lg">
                             <IconBan size={20} />
                         </ActionIcon>
                         <Space h={8} />
                         <Text fz="sm">Ban</Text>
-                    </Flex>
-                    <Flex direction={'column'} justify='center' align='center'>
-                        <ActionIcon color="red" variant="filled" radius="xl" size="lg">
-                            <IconUser size={20} />
-                        </ActionIcon>
-                        <Space h={8} />
-                        <Text fz="sm">Profile</Text>
                     </Flex>
                 </Flex>
             </Center>

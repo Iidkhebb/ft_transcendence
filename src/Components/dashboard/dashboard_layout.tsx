@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Divider, Grid, Group, Input, Space } from "@mantine/core";
+import { Avatar, Box, Button, Divider, Grid, Group, Input, MantineTheme, Space } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
 import { useMantineTheme, Flex } from "@mantine/core";
 // import Header from "./header";
@@ -12,11 +12,13 @@ import { motion } from "framer-motion";
 import { IconArrowNarrowLeft, IconSend } from "@tabler/icons-react";
 import { PrivateChatMenu } from "./chat/components/privateChatMenu";
 import AsideChatInfo from "./aside";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function DashboardLayout() {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
     const [chat, setChat] = useState<any>(null);
+    const isMobile = useMediaQuery("(max-width: 768px)");
 
     const AsideWidth = "300px";
 
@@ -45,13 +47,20 @@ export function DashboardLayout() {
             header={<HeaderDashboard />}
             aside={
                 chat ? (
-                    <Aside w={AsideWidth} hiddenBreakpoint="sm" hidden={!opened}>
-                        <AsideChatInfo />
+                    <Aside
+                        w={AsideWidth}
+                        hiddenBreakpoint="sm"
+                        hidden={!opened}
+                        sx={{
+                            zIndex: 0,
+                        }}
+                    >
+                        <AsideChatInfo user={chat} />
                     </Aside>
                 ) : undefined
             }
         >
-            <Box w={chat ? `calc(100% - ${AsideWidth})`: '100%'}>
+            <Box w={chat && !isMobile ? `calc(100% - ${AsideWidth})` : "100%"}>
                 {chat ? (
                     <Box p="md">
                         <ChatContainer user={chat} setSelected={setChat} />
@@ -68,6 +77,7 @@ export function DashboardLayout() {
 
 function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
     const theme = useMantineTheme();
+    const isMobile = useMediaQuery("(max-width: 768px)");
     // const [user, setUser] = useState(user);
 
     const [messages, setMessages] = useState([
@@ -92,7 +102,6 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
     ]);
 
     const [message, setMessage] = useState("");
-    const [last_message, setLastMessage] = useState<any>(null);
     const scrollRef = useRef<any>();
 
     const sendMessage = (message: any) => {
@@ -104,14 +113,13 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
     useEffect(() => {
         //get the last message
         const lastMessage = scrollRef.current.lastElementChild;
-
         // scroll to the last message
         lastMessage.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     return (
         <Box>
-            <Flex p={10} pt={20}>
+            <Flex>
                 <motion.div
                     animate={{ opacity: 1 }}
                     transition={{
@@ -135,23 +143,26 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
                 >
                     <IconArrowNarrowLeft size={25} />
                 </motion.div>
+                <Space w={10} />
                 <Flex justify="space-between" w="100%">
                     <Group w={"100%"}>
-                        <Avatar src={user.avatar} size="sm" radius="xl" />
+                        <Avatar src={user.avatar} size="md" radius="xl" />
                         <Box ml={-6}>
-                            <Text fz="md">{user.name}</Text>
+                            <Text fw="bold" fz="md">
+                                {user.name}
+                            </Text>
                         </Box>
                     </Group>
-                    <PrivateChatMenu />
+                    {isMobile ? <PrivateChatMenu user={user} /> : null}
                 </Flex>
             </Flex>
-            <Divider my="xs" size="xs" color="gray.7" />
+            <Divider mt="md" size="xs" color="gray.7" />
             <Box
-                p={10}
+                px={10}
                 pt={0}
                 sx={{
                     overflowY: "scroll",
-                    height: "calc(100vh - 300px)",
+                    height: "calc(100vh - 237px)",
                 }}
                 ref={scrollRef}
             >
@@ -161,10 +172,17 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
                     </Box>
                 ))}
             </Box>
-            <Divider my="xs" size="xs" color="gray.7" />
-            <Box p={10}>
+            <Divider mb="xs" size="xs" color="gray.7" />
+            <Box>
                 <Flex justify="space-between" gap={10} align="center">
                     <Input
+                        sx={(theme: MantineTheme) => ({
+                            // change outline color on focus
+                            "&:focus": {
+                                outline: `1px solid ${theme.colors.orange[6]} !important`,
+                                outlineOffset: 2,
+                            },
+                        })}
                         placeholder="Type a message..."
                         value={message}
                         onChange={(e) => setMessage(e.currentTarget.value)}
@@ -211,7 +229,7 @@ function Message({ message, username }: { message: any; username: string }) {
                     bg={message.from === "me" ? "gray.9" : "gray.8"}
                     sx={{
                         borderRadius: theme.radius.md,
-                        maxWidth: "60%",
+                        maxWidth: "500px",
                         wordWrap: "break-word",
                     }}
                 >
