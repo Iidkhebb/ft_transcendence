@@ -2,6 +2,7 @@ import { ProfileLayout } from "@/Components/profile/profileLayout";
 import React, { useEffect } from "react";
 import store, { setProfile } from "@/store/store";
 import api from "@/api";
+import { Head } from "@/Components/head";
 
 export default function Profile() {
     useEffect(() => {
@@ -14,5 +15,10 @@ export default function Profile() {
             });
     }, []);
 
-    return <ProfileLayout />;
+    return (
+        <>
+            <Head title="Profile" description="Profile" keywords="Profile" icon="/favicon.ico" />
+            <ProfileLayout />;
+        </>
+    );
 }

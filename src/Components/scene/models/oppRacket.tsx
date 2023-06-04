@@ -82,6 +82,74 @@ export function PingPongOppRacket({ Camera, setRacket, Racket }: props) {
         document.body.style.cursor = "auto";
     }
 
+    useEffect(() => {
+        setRacket((prev: any) => {
+            prev.id = ref_racket.current?.id;
+            prev.api = api_racket;
+            prev.ref = ref_racket;
+            return {
+                ...prev,
+            };
+        });
+
+        api_racket.position.subscribe((pos: any) => {
+            Racket.position = pos;
+        });
+
+        let w_width = window.innerWidth;
+        // let w_height = window.innerHeight;
+        let mouseX: number = w_width / 2;
+
+        const mouseMove = (e: MouseEvent) => {
+            if (document.pointerLockElement === document.body || true) {
+                if (mouseX + e.movementX > 0 && mouseX + e.movementX < w_width) {
+                    mouseX += e.movementX;
+
+                    // move the camera
+                    let cameraPosition = Camera.current.position;
+                    Camera.current.position.set(
+                        cameraPosition.x + e.movementX / 2000,
+                        cameraPosition.y,
+                        cameraPosition.z
+                    );
+                    Camera.current.lookAt(0, 1, 0);
+                }
+            }
+
+            const x = (mouseX / w_width) * 2 - 1;
+
+            // move the racket
+            api_racket.position.set(-x, Racket.position[1], Racket.position[2]);
+            // rotate the racket
+            // api_racket.rotation.set(Racket.rotation[0], Racket.rotation[1] + x * 2, Racket.rotation[2]);
+            if (ref.current) ref.current.rotation.set(0, 0 + x * 1.5, 0);
+        };
+
+        window.addEventListener("mousemove", mouseMove);
+
+        // // lock the mouse in the center of the screen
+        document.addEventListener("pointerlockchange", () => {
+            if (document.pointerLockElement) {
+                document.addEventListener("mousemove", mouseMove);
+            } else {
+                document.removeEventListener("mousemove", mouseMove);
+            }
+        });
+
+        // click to lock the mouse
+        document.addEventListener("click", handleClick);
+
+        // escape key
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") handleKeyEscape();
+        });
+
+        return () => {
+            ("");
+            window.removeEventListener("mousemove", mouseMove);
+        };
+    }, []);
+
     return (
         <mesh ref={ref_racket as meshRef} castShadow receiveShadow>
             <mesh ref={ref} scale={Racket.scale} receiveShadow castShadow>

@@ -101,19 +101,19 @@ export function PingPongRacket({ Camera, setRacket, Racket }: props) {
             if (ref.current) ref.current.rotation.set(0, 0 + x * 1.5, 0);
         };
 
-        // window.addEventListener("mousemove", mouseMove);
+        window.addEventListener("mousemove", mouseMove);
 
-        // // // lock the mouse in the center of the screen
-        // document.addEventListener("pointerlockchange", () => {
-        //     if (document.pointerLockElement) {
-        //         document.addEventListener("mousemove", mouseMove);
-        //     } else {
-        //         document.removeEventListener("mousemove", mouseMove);
-        //     }
-        // });
+        // // lock the mouse in the center of the screen
+        document.addEventListener("pointerlockchange", () => {
+            if (document.pointerLockElement) {
+                document.addEventListener("mousemove", mouseMove);
+            } else {
+                document.removeEventListener("mousemove", mouseMove);
+            }
+        });
 
         // click to lock the mouse
-        // document.addEventListener("click", handleClick);
+        document.addEventListener("click", handleClick);
 
         // escape key
         document.addEventListener("keydown", (e) => {

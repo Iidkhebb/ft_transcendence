@@ -62,9 +62,15 @@ export function DashboardLayout() {
         >
             <Box w={chat && !isMobile ? `calc(100% - ${AsideWidth})` : "100%"}>
                 {chat ? (
-                    <Box p="md">
-                        <ChatContainer user={chat} setSelected={setChat} />
-                    </Box>
+                    <motion.div
+                        initial={{ opacity: 0, transform: "translateY(-100%)" }}
+                        animate={{ opacity: 1, transform: "translateY(0%)" }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <Box p="md">
+                            <ChatContainer user={chat} setSelected={setChat} />
+                        </Box>
+                    </motion.div>
                 ) : (
                     <Box p="md">
                         <PublicGroups />
@@ -163,6 +169,22 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
                 sx={{
                     overflowY: "scroll",
                     height: "calc(100vh - 237px)",
+
+                    /* ===== Scrollbar CSS ===== */
+                    /* Firefox */
+                    scrollbarColor: `${theme.colors.gray[8]} transparent`,
+                    scrollbarWidth: "thin",
+                    /* Chrome, Edge, and Safari */
+                    "&::-webkit-scrollbar": {
+                        width: "5px",
+                    },
+                    "&::-webkit-scrollbar-track": {
+                        background: "transparent",
+                    },
+                    "&::-webkit-scrollbar-thumb": {
+                        background: theme.colors.gray[8],
+                        borderRadius: theme.radius.md,
+                    },
                 }}
                 ref={scrollRef}
             >

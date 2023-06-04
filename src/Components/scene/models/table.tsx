@@ -41,7 +41,6 @@ export function PingPongTable({ Table, setTable }: { Table: Object3D; setTable: 
             let arr: number[] = [1, 2, 4, 5, 6, 7, 15, 14];
             if (arr.includes(index)) {
                 const shape: any = threeToCannon(obj, { type: ShapeType.HULL })?.shape;
-                // console.log(shape);
                 if (shape == undefined) return;
                 const scale = 1 / (Table.collide?.scale || 1); // adjust the scale here
                 const scaledVertices = shape.vertices.map((v: {x: number, y: number, z: number}) => [v.x / scale, v.y / scale, v.z / scale]);

@@ -174,15 +174,15 @@ export function Scene() {
 function DefaultCamera({ CameraRef }: { CameraRef: any }) {
     CameraRef.current?.lookAt(0, 1, 0);
 
-    useFrame(({ clock }) => {
-        // rotate the camera around the table
-        CameraRef.current?.position.set(
-            4 * Math.sin(clock.getElapsedTime() / 9),
-            1.8,
-            4 * Math.cos(clock.getElapsedTime() / 15)
-        );
-        CameraRef.current?.lookAt(0, 1, 0);
-    });
+    // useFrame(({ clock }) => {
+    //     // rotate the camera around the table
+    //     CameraRef.current?.position.set(
+    //         4 * Math.sin(clock.getElapsedTime() / 9),
+    //         1.8,
+    //         4 * Math.cos(clock.getElapsedTime() / 15)
+    //     );
+    //     CameraRef.current?.lookAt(0, 1, 0);
+    // });
 
     return <PerspectiveCamera makeDefault position={new Vector3(0, 1.8, -4)} fov={75} ref={CameraRef} />;
 }
