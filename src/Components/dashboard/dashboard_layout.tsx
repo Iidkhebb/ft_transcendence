@@ -65,7 +65,7 @@ export function DashboardLayout() {
                     <motion.div
                         initial={{ opacity: 0, transform: "translateY(-100%)" }}
                         animate={{ opacity: 1, transform: "translateY(0%)" }}
-                        exit={{ opacity: 0 }}
+                        exit={{ opacity: 0,  }}
                     >
                         <Box p="md">
                             <ChatContainer user={chat} setSelected={setChat} />
