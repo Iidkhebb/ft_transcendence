@@ -14,6 +14,8 @@ import { PrivateChatMenu } from "./chat/components/privateChatMenu";
 import AsideChatInfo from "./aside";
 import { useMediaQuery } from "@mantine/hooks";
 
+import { AnimatePresence } from "framer-motion";
+
 export function DashboardLayout() {
     const theme = useMantineTheme();
     const [opened, setOpened] = useState(false);
@@ -35,6 +37,8 @@ export function DashboardLayout() {
             styles={{
                 main: {
                     background: theme.colorScheme === "dark" ? theme.colors.dark[8] : theme.colors.gray[0],
+                    height: "100vh",
+                    overflow: "hidden",
                 },
             }}
             navbarOffsetBreakpoint="sm"
@@ -46,36 +50,58 @@ export function DashboardLayout() {
             }
             header={<HeaderDashboard />}
             aside={
-                chat ? (
-                    <Aside
-                        w={AsideWidth}
-                        hiddenBreakpoint="sm"
-                        hidden={!opened}
-                        sx={{
-                            zIndex: 0,
-                        }}
-                    >
-                        <AsideChatInfo user={chat} />
-                    </Aside>
-                ) : undefined
+                <AnimatePresence>
+                    {chat && (
+                        <motion.div
+                            key="AsideChatInfo"
+                            initial={{ opacity: 0, transform: "translateX(-40%)" }}
+                            animate={{ opacity: 1, transform: "translateX(0%)" }}
+                            exit={{ opacity: 0, transform: "translateX(-40%)" }}
+                        >
+                            <Aside
+                                w={AsideWidth}
+                                hiddenBreakpoint="sm"
+                                hidden={!opened}
+                                sx={{
+                                    zIndex: 0,
+                                }}
+                            >
+                                <AsideChatInfo user={chat} />
+                            </Aside>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             }
         >
-            <Box w={chat && !isMobile ? `calc(100% - ${AsideWidth})` : "100%"}>
-                {chat ? (
-                    <motion.div
-                        initial={{ opacity: 0, transform: "translateY(-100%)" }}
-                        animate={{ opacity: 1, transform: "translateY(0%)" }}
-                        exit={{ opacity: 0,  }}
-                    >
-                        <Box p="md">
-                            <ChatContainer user={chat} setSelected={setChat} />
-                        </Box>
-                    </motion.div>
-                ) : (
-                    <Box p="md">
-                        <PublicGroups />
-                    </Box>
-                )}
+            <Box w={chat && !isMobile ? `calc(100% - ${AsideWidth})` : "100%"} sx={{
+                transition: "all 0.3s ease-in-out",
+            }}>
+                <AnimatePresence>
+                    {chat && (
+                        <motion.div
+                            key="modal"
+                            initial={{ opacity: 0, transform: "translateX(-40%)", scale: 0.8 }}
+                            animate={{ opacity: 1, transform: "translateX(0%)", scale: 1 }}
+                            exit={{ opacity: 0, transform: "translateX(-40%) translateY(10%)", scale: 0 }}
+                        >
+                            <Box p="md">
+                                <ChatContainer user={chat} setSelected={setChat} />
+                            </Box>
+                        </motion.div>
+                    )}
+                    {!chat && (
+                        <motion.div
+                            key="modal2"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                        >
+                            <Box p="md">
+                                <PublicGroups />
+                            </Box>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
             </Box>
         </AppShell>
     );
@@ -127,14 +153,22 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
         <Box>
             <Flex>
                 <motion.div
-                    animate={{ opacity: 1 }}
                     transition={{
                         duration: 0.1,
                     }}
+                    key="modal"
                     initial={{
                         opacity: 0,
-                        scale: 1,
-                        background: "transparent",
+                        background: "rgba(0,0,0,0)",
+                        borderRadius: theme.radius.md,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                    animate={{ opacity: 1 }}
+                    exit={{
+                        opacity: 0,
+                        background: "rgba(0,0,0,0)",
                         borderRadius: theme.radius.md,
                         display: "flex",
                         alignItems: "center",
@@ -247,10 +281,14 @@ function Message({ message, username }: { message: any; username: string }) {
         <Box>
             <Flex justify={message.from === "me" ? "flex-end" : "flex-start"}>
                 <Box
+                    m={10}
                     p={10}
                     bg={message.from === "me" ? "gray.9" : "gray.8"}
                     sx={{
-                        borderRadius: theme.radius.md,
+                        borderRadius:
+                            message.from !== "me"
+                                ? `${theme.radius.lg} ${theme.radius.lg} ${theme.radius.lg} ${0}`
+                                : `${theme.radius.lg} ${theme.radius.lg} ${0} ${theme.radius.lg}`,
                         maxWidth: "500px",
                         wordWrap: "break-word",
                     }}
