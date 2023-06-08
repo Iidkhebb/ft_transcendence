@@ -127,7 +127,7 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
         },
         {
             id: 2,
-            message: "fin awlad l9ahba? 💁👌🎍😍",
+            message: "fin awlad latifa? 💁👌🎍😍",
             time: "12:00",
             from: "me",
         },
