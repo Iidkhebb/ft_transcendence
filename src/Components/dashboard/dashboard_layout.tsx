@@ -134,7 +134,7 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
     ]);
 
     const [message, setMessage] = useState("");
-    const scrollRef = useRef<any>();
+    const scrollRef = useRef<Readonly<HTMLDivElement> | null>(null);
 
     const sendMessage = (message: any) => {
         if (!message || message.message === "") return;
@@ -144,9 +144,9 @@ function ChatContainer({ user, setSelected }: { user: any; setSelected: any }) {
 
     useEffect(() => {
         //get the last message
-        const lastMessage = scrollRef.current.lastElementChild;
+        const lastMessage = scrollRef.current?.lastElementChild;
         // scroll to the last message
-        lastMessage.scrollIntoView({ behavior: "smooth" });
+        lastMessage?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
     return (
